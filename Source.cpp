@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         string s;
         getline(cin, s);
  
-        if (s == "p")
+        if (s == "train")
         {
             n.gradient_descent(inp, out, 100000);
             cout << calc_error(inp, out, n) << endl;
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
             }
         }
  
-        if (s == "g")
+        if (s == "genetics")
         {
             auto g = n.get_genetics();
             for (int l = 0; l < g.size(); l++)
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
             }
         }
  
-        if (s == "c")
+        if (s == "change")
         {
             getline(cin, s);
             c = stod(s);
