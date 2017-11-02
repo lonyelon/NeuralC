@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     Network n = Network({ 2, 4, 4, 3 });
-    vector<vector<double>> inp
+    vector<vector<float>> inp
     {
         { 0, 0 },
         { 0, 1 },
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         { 1, 1 },
     };
  
-    vector<vector<double>> out = 
+    vector<vector<float>> out = 
     {
         { 0, 0, 1 },      
         { 0, 1, 0 },    
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     };
  
  
-    double c = 0.0000001;
+    float c = 0.0000001;
     while(true)
     {
         string s;
@@ -42,8 +42,8 @@ int main(int argc, char *argv[])
  
         if (s == "input")
         {
-            vector<double> d;
-            vector<double> r;
+            vector<float> d;
+            vector<float> r;
  
             for (int i = 0; i < n.get_layer_blueprint()[0]-1; i++)
             {
