@@ -3,44 +3,29 @@
 
 using namespace std;
 
-struct pixel
-{
-    int r;
-    int g;
-    int b;
-};
-
 struct image
 {
-    pixel p[1000];
+    int r[1024][1024];
+    int g[1024][1024];
+    int b[1024][1024];
 };
 
-image image_to_grey(image inp)
-{
-    for (int i = 0; i < 1000; i++)
-    {
-        int med = inp.p[i].r;
-        med += inp.p[i].g;
-        med += inp.p[i].b;
-        med = round(med/3);
-        inp.p[i].r = med;
-        inp.p[i].g = med;
-        inp.p[i].b = med;
-    }
-    return inp;
-}
-
-vector2d image_to_training_data(image inp, int inp_size)
+vector2d image_to_training_data(image inp)
 {
     vector2d out;
-    for (int i = 0; i < 1000; i++)
+    
+    for (int y = 0; y < 1024; y += 2)
     {
-        int k;
-        vector<float> out_tmp;
-        for (k = 0; k < inp_size; k++)
-            out_tmp.push_back(inp.p[i].r/255);
-        i += k;
-        out.push_back(out_tmp);
+        vector<float> tmp;
+        for (int x = 0; x < 1024; x += 2)
+        {
+            tmp.push_back(inp.r[x][y]);
+            tmp.push_back(inp.r[x+1][y]);
+            tmp.push_back(inp.r[x][y+1]);
+            tmp.push_back(inp.r[x+1][y+1]);
+        }
+        out.push_back(tmp);
     }
+
     return out;
 }
