@@ -3,7 +3,7 @@
 #include <string>
 #include <cmath>
 #include <fstream>
-#include "Network.h"
+#include "NeuralCore/Network.h"
  
 using namespace std;
  
