@@ -1,36 +1,40 @@
 #ifndef _NETWORK_H_
 #define _NETWORK_H_
- 
+
 #include <vector>
- 
-//Math
-double sigmoid_function(double x);
-double sigmoid_derivative(double x);
-double rectify_function(double x);
-double random_range(double min, double max);
- 
-//The network
-class Network 
+#include <string>
+
+#define vector2d std::vector<std::vector<float>>
+#define vector3d std::vector<vector2d>
+
+float sigmoid_function(float x);
+float sigmoid_derivative(float x);
+float rectify_function(float x);
+float random_range(float min, float max);
+
+class Network
 {
 private:
-    std::vector<std::vector<double>> neurons;
-    std::vector<std::vector<std::vector<double>>> synapses;
-    void clear();
+	vector2d neurons;
+	vector3d synapses;
+	void clear();
 public:
-    Network(std::vector<int> layers);
-    std::vector<double> get_result(std::vector<double> inp);
-    std::vector<int> get_layer_blueprint();
-    std::vector<std::vector<std::vector<double>>> get_genetics();
-    std::vector<double> get_layer_values(int layer);
-    void set_genetics(std::vector<std::vector<std::vector<double>>> s);
-    void gradient_descent(std::vector<std::vector<double>>, std::vector<std::vector<double>>, int);
+	Network(std::vector<int> layers);
+	std::vector<float> get_result(std::vector<float> inp);
+	std::vector<int> get_layer_blueprint();
+	vector3d get_genetics();
+	std::vector<float> get_layer_values(int layer);
+	void set_genetics(vector3d s);
+	void gradient_descent(vector2d, vector2d, int);
 };
- 
+
 //Useful things
 void print_layers(Network net);
- 
+
 //Learning 
-double calc_error(std::vector<std::vector<double>> inp, std::vector<std::vector<double>> out, Network n);
-std::vector<std::vector<std::vector<double>>> mutate_network(std::vector<std::vector<std::vector<double>>> g, double mut_prob);
- 
+float calc_error(vector2d inp, vector2d out, Network n);
+vector3d mutate_network(vector3d g, float mut_prob);
+void save_genetics(std::string file, Network n);
+Network load_genetics(std::string path);
+
 #endif

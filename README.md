@@ -1,2 +1,2 @@
 # NeuralC
-sdA c++ implementation of neural networks
+A c++ implementation of neural networks
