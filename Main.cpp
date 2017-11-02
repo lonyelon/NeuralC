@@ -112,7 +112,12 @@ int main(int argc, char *argv[])
                 c = stod(buff);
             }
 
-            if (values > 2)
+            if (input[0] == "save")
+            {
+                save_genetics(name + ".ndf", n);
+            }
+
+            if (values > 1)
             {
                 if (input[0] == "new")
                 {
@@ -132,6 +137,16 @@ int main(int argc, char *argv[])
                         reverse(layers.begin(), layers.end());
                         n = Network(layers);
                         name = NO_NAME;
+                    }
+                }
+
+                if (input[0] == "set")
+                {
+                    if (input[1] == "name")
+                    {
+                        cout << "New name for the network: ";
+                        getline(cin, buff);
+                        name = buff;
                     }
                 }
             }
