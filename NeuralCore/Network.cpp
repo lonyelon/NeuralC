@@ -3,6 +3,7 @@
 #include <random>
 #include <fstream>
 #include <iostream>
+#include <thread>
 #include "Network.h"
 
 #define file_ext ".txt"

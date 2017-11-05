@@ -63,6 +63,12 @@ int main(int argc, char *argv[])
         int values = input.size();
         if (values > 0)
         {
+            if (input[0] == "help")
+            {
+                cout << "List of commands:" << endl;
+                cout << "train, input, genetics, change, save, new network, set name" << endl; 
+            }
+
             if (input[0] == "train")
             {
                 n.gradient_descent(inp, out, 100000);
