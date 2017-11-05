@@ -10,9 +10,9 @@ struct image
     int b[1024][1024];
 };
 
-vector2d image_to_training_data(image inp)
+vector<vector<float>> image_to_training_data(image inp)
 {
-    vector2d out;
+    vector<vector<float>> out;
     
     for (int y = 0; y < 1024; y += 2)
     {

@@ -13,49 +13,6 @@ using namespace std;
 
 /*
 
-Math needed for the net
-
-*/
-
-float sigmoid_function(float x)
-{
-	float e = 2.718281828459;
-	return 1 / (1 + pow(e, -x));
-	//return tanh(x); 
-}
-
-float sigmoid_derivative(float x)
-{
-	float e = 2.718281828459;
-	return x*(1 - x);
-	//return 1 - pow(x , 2);
-}
-
-float rectify_function(float x)
-{
-	if (x > 0)
-		return x;
-	return 0;
-}
-
-float get_sign(float x)
-{
-	if (x > 0)
-		return 1;
-	return -1;
-}
-
-//Random number (float) betwen min and max
-float random_range(float min, float max)
-{
-	uniform_real_distribution<float> rn(min, max);
-	mt19937 mt;
-	mt.seed(random_device{}());
-	return rn(mt);
-}
-
-/*
-
 Aditional functions that are useful
 
 */
@@ -83,7 +40,7 @@ void print_layers(Network net)
 }
 
 //Compares the result of "inp" to what we expected ("out") and retuen the error
-float calc_error(vector2d inp, vector2d out, Network n)
+float calc_error(vector<vector<float>> inp, vector<vector<float>> out, Network n)
 {
 	float err = 0;
 	for (int i = 0; i < inp.size(); i++)
@@ -99,7 +56,7 @@ float calc_error(vector2d inp, vector2d out, Network n)
 }
 
 //Randomly changes the value of one synapse, used in genetic algorithms
-vector3d mutate_network(vector3d g, float mut_prob)
+vector<vector<vector<float>>> mutate_network(vector<vector<vector<float>>> g, float mut_prob)
 {
 	for (int l = 0; l < g.size(); l++)
 	{
@@ -120,7 +77,7 @@ vector3d mutate_network(vector3d g, float mut_prob)
 
 /*
 
-CODE FOR THE NETWORK CLASS
+	CODE FOR THE NETWORK CLASS
 
 */
 
@@ -150,7 +107,7 @@ Network::Network(vector<int> layers)
 	for (int l = 0; l < layers.size() - 1; l++)
 	{
 		//Synapses of that neuron
-		vector2d synapses_layer_tmp;
+		vector<vector<float>> synapses_layer_tmp;
 		for (int n = 0; n < layers[l]; n++)
 		{
 			vector<float> synapses_tmp;
@@ -173,6 +130,11 @@ Network::Network(vector<int> layers)
 	}
 
 	Network::clear();
+}
+
+vector<vector<float>> Network::get_current_state()
+{
+	return Network::neurons;
 }
 
 void Network::clear()
@@ -226,7 +188,7 @@ vector<float> Network::get_result(vector<float> inp)
 	return r;
 }
 
-void Network::set_genetics(vector3d s)
+void Network::set_genetics(vector<vector<vector<float>>> s)
 {
 	Network::synapses = s;
 }
@@ -249,228 +211,7 @@ vector<float> Network::get_layer_values(int layer)
 	return Network::neurons[layer];
 }
 
-vector3d Network::get_genetics()
+vector<vector<vector<float>>> Network::get_genetics()
 {
 	return Network::synapses;
-}
-
-/*
-
-Optimization
-
-*/
-
-void Network::gradient_descent(vector2d inp, vector2d out, int rep)
-{
-	float best_result = calc_error(inp, out, *this);
-	Network best = *this;
-	for (int r = 0; r < rep; r++)
-	{
-		for (int i = 0; i < inp.size(); i++)
-		{
-			vector<float> result = Network::get_result(inp[i]); //Solution for the input i
-
-			vector2d derivative = Network::neurons;
-			for (int l = 0; l < derivative.size(); l++)
-			{
-				for (int n = 0; n < derivative[l].size(); n++)
-				{
-					derivative[l][n] = 0;
-				}
-			}
-
-			for (int l = Network::neurons.size() - 1; l >= 0; l--)
-			{
-				// l     == current neuroal layer
-				// l - 1 == current synapses layer
-				// l + 1 == next neuronal layer
-
-				if (l == Network::synapses.size()) //If it is the last layer
-				{
-					for (int n = 0; n < Network::neurons[l].size(); n++) //Compute the error for every output neuron
-					{
-						float val = 0;
-						val = out[i][n] - result[n];
-						val *= sigmoid_derivative(result[n]);
-						derivative[l][n] = val;
-					}
-				}
-				else
-				{
-					for (int n = 0; n < Network::neurons[l].size(); n++)
-					{
-						int t = 0;
-						if (l != Network::synapses.size() - 1)
-						{
-							t = 1;
-						}
-
-						for (int s = 0; s < Network::neurons[l + 1].size() - t; s++)
-						{
-							if (derivative[l][n] == 0)
-							{
-								derivative[l][n] = derivative[l + 1][s] * Network::synapses[l][n][s] * sigmoid_derivative(Network::neurons[l][n]);
-							}
-							else
-							{
-								derivative[l][n] += derivative[l + 1][s] * Network::synapses[l][n][s] * sigmoid_derivative(Network::neurons[l][n]);
-							}
-						}
-						derivative[l][n] /= Network::neurons[l + 1].size();
-					}
-				}
-			}
-
-			//cout << endl;
-			for (int l = 0; l < Network::synapses.size(); l++)
-			{
-				for (int n = 0; n < Network::synapses[l].size(); n++)
-				{
-					int t = 0;
-					if (l != Network::synapses.size() - 1)
-					{
-						t = 0;
-					}
-
-					for (int s = 0; s < Network::synapses[l][n].size() - t; s++)
-					{
-						Network::synapses[l][n][s] += derivative[l + 1][s] * Network::neurons[l][n];
-					}
-				}
-			}
-		}
-
-		if (best_result > calc_error(inp, out, *this))
-		{
-			best_result = calc_error(inp, out, *this);
-			best = *this;
-		}
-
-		//Loadbar but in the terminal
-		if (r % (rep / 100) == 0)
-		{
-			cout << "Training, " << r * 100 / rep << "\% completed." << endl;
-		}
-	}
-
-	//*this = best; //This is optional, it selects only the best network.
-}
-
-/*
-
-File management
-
-*/
-
-void save_genetics(string path, Network n)
-{
-	ofstream file;
-	file.open(path);
-
-	vector3d synapses = n.get_genetics();
-	vector<int> layers = n.get_layer_blueprint();
-	int layer_count = layers.size();
-
-	file << layers.size();
-
-	for (int l = 0; l < layer_count; l++)
-	{
-		file << "\r\n" << layers[l];
-	}
-
-	string out;
-
-	for (int l = 0; l < layer_count - 1; l++)
-	{
-		for (int n = 0; n < layers[l]; n++)
-		{
-			int t = 0;
-			if (l != synapses.size() - 1)
-			{
-				t = 1;
-			}
-
-			for (int s = 0; s < layers[l + 1] - t; s++)
-			{
-				if (abs(synapses[l][n][s]) < 0.00001)
-				{
-					synapses[l][n][s] = 0;
-				}
-
-				out += "\r\n" + to_string(synapses[l][n][s]);
-			}
-		}
-	}
-	file << out;
-
-	file.close();
-}
-
-Network load_genetics(string path)
-{
-	ifstream file;
-	file.open(path);
-
-	string buff;
-
-	getline(file, buff);
-	int network_size = stoi(buff);
-
-	vector<int> layers;
-	for (int l = 0; l < network_size; l++)
-	{
-		getline(file, buff);
-		int count = stoi(buff);
-
-		if (l != network_size - 1)
-		{
-			count--;
-		}
-
-		layers.push_back(count);
-	}
-
-	vector<float> nsynapses;
-	vector2d lsynapses;
-	vector3d synapses;
-
-	int l = 0;
-	int n = 0;
-	int s = 0;
-
-	while (!file.eof())
-	{
-		getline(file, buff);
-		nsynapses.push_back(stod(buff));
-
-		s++;
-
-		if (s == layers[l + 1])
-		{
-			n++;
-			s = 0;
-			lsynapses.push_back(nsynapses);
-			nsynapses.clear();
-		}
-
-		if (n == layers[l] + 1)
-		{
-			s = 0;
-			n = 0;
-			l++;
-			synapses.push_back(lsynapses);
-			lsynapses.clear();
-		}
-
-		if (l == layers.size() - 1)
-		{
-			break;
-		}
-	}
-
-	Network net = Network(layers);
-	net.set_genetics(synapses);
-
-	file.close();
-	return net;
 }

@@ -1,11 +1,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <thread>
 #include <cmath>
+#include <ctime>
 #include <fstream>
 #include <algorithm>
 #include "NeuralCore/Network.h"
 #include "NeuralCore/Image.h"
+#include "NeuralCore/Save.h"
+#include "NeuralCore/Optimization.h"
  
 #define NO_NAME "Unnamed_Network"
 
@@ -71,9 +75,17 @@ int main(int argc, char *argv[])
 
             if (input[0] == "train")
             {
-                n.gradient_descent(inp, out, 100000);
+                auto t = time(NULL);
+                vector<int> b = { 2, 4, 1};
+                vector<vector<vector<float>>> s = n.get_genetics();
+                thread t0(gradient_descent, &s, b, inp, out, 1000000);
+                
+                t0.join();
+
+                n.set_genetics(s);
                 cout << calc_error(inp, out, n) << endl;
                 cout << "done" << endl;
+                cout << time(NULL) - t << endl;                
             }
     
             if (input[0] == "input")
