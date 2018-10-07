@@ -1,0 +1,1 @@
+g++ -lpthread -lm --std=c++17 $(find | grep .cpp) -o build/a.out
