@@ -1,11 +1,12 @@
+#include "../include/NeuralC.h"
+
 #include <vector>
 #include <iostream>
 #include <thread>
-#include "../include/NeuralC.h"
 
 using namespace std;
 
-void gd_hidden(vector<vector<vector<float>>>* synapses, vector<int> blue, vector<vector<float>> inp, vector<vector<float>> out, int rep)
+void _gd_hidden(vector<vector<vector<float>>>* synapses, vector<int> blue, vector<vector<float>> inp, vector<vector<float>> out, int rep)
 {
     Network n = Network(blue);    
 	for (int r = 0; r < rep; r++)
@@ -99,7 +100,7 @@ void gradient_descent(Network *N, vector<vector<float>> inp, vector<vector<float
 		b[i]--;
 
 	for (int  i = 0; i < cores; i++)
-		t[i] = thread(gd_hidden, &synapses, b, inp, out, it/cores);
+		t[i] = thread(_gd_hidden, &synapses, b, inp, out, it/cores);
 
 	for (int  i = 0; i < cores; i++)
 		t[i].join();

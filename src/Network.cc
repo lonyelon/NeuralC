@@ -1,10 +1,11 @@
+#include "../include/NeuralC.h"
+
 #include <string>
 #include <cmath>
 #include <random>
 #include <fstream>
 #include <iostream>
 #include <thread>
-#include "../include/NeuralC.h"
 
 #define file_ext ".txt"
 #define data_dir "Data/"
