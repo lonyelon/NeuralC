@@ -33,4 +33,7 @@ EXAMPLE
 ```
 
 ## API Reference
-Just include `include/NeuralC.h` in your project. To create a new network type `Network n = Network(vector <int> layers)`.
+Just include `include/NeuralC.h` in your project.
+### Files
+* Network.cpp contains the Network class
+* Optimization.cpp includes gradient descent
