@@ -7,7 +7,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include "NeuralC.h"
+#include "include/NeuralC.h"
 
 using namespace std;
 
