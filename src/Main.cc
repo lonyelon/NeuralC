@@ -7,8 +7,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include "../include/NeuralC.h"
-#include "../include/StringUtils.h"
+#include "NeuralC.h"
 
 using namespace std;
 

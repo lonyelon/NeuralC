@@ -1,4 +1,4 @@
-#include "../include/NeuralC.h"
+#include "Network.h"
 
 #include <string>
 #include <cmath>
@@ -6,6 +6,8 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
+
+#include "NeuralMath.h"
 
 #define file_ext ".txt"
 #define data_dir "Data/"

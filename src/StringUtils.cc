@@ -1,4 +1,7 @@
-#include "../include/StringUtils.h"
+#include "StringUtils.h"
+
+#include <vector>
+#include <string>
 
 using namespace std;
 
