@@ -1,4 +1,4 @@
-#include "../include/NeuralC.h"
+#include "NeuralMath.h"
 
 #include <cmath>
 #include <random>

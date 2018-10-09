@@ -1,1 +1,1 @@
-g++ -lpthread -lm --std=c++17 $(find | grep .cc) -o build/a.out
+g++ --std=c++17 -lm -pthread $(find ./src/ | grep .cc) -o NeuralC

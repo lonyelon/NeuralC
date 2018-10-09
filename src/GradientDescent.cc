@@ -1,8 +1,11 @@
-#include "../include/NeuralC.h"
+#include "GradientDescent.h"
 
 #include <vector>
 #include <iostream>
 #include <thread>
+
+#include "Network.h"
+#include "NeuralMath.h"
 
 using namespace std;
 

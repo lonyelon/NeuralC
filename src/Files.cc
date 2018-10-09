@@ -1,4 +1,7 @@
-#include "../include/NeuralC.h"
+#include "Files.h"
+
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
