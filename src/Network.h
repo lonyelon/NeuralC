@@ -29,8 +29,6 @@ public:
     std::vector<std::vector<std::vector<float>>> get_genetics();
 };
 
-void print_layers(Network net);
-float calc_error(std::vector<std::vector<float>> inp, std::vector<std::vector<float>> out, Network n);
 std::vector<std::vector<std::vector<float>>> mutate_network(std::vector<std::vector<std::vector<float>>> g, float mut_prob);
 
 #endif
