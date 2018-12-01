@@ -51,3 +51,23 @@ float calc_error(vector<vector<float>> inp, vector<vector<float>> out, Network n
 	//err /= inp.size();
 	return err;
 }
+
+//Randomly changes the value of one synapse, used in genetic algorithms
+vector<vector<vector<float>>> mutate_network(vector<vector<vector<float>>> g, float mut_prob)
+{
+	for (int l = 0; l < g.size(); l++)
+	{
+		for (int n = 0; n < g[l].size(); n++)
+		{
+			for (int s = 0; s < g[l][n].size(); s++)
+			{
+				if (random_range(0, 1) < mut_prob)
+				{
+					g[l][n][s] = tanh(atanh(g[l][n][s]) + random_range(-2, 2));
+				}
+			}
+		}
+	}
+
+	return g;
+}

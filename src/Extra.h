@@ -17,5 +17,6 @@ using namespace std;
 
 void print_layers(Network net);
 float calc_error(vector<vector<float>> inp, vector<vector<float>> out, Network n);
+vector<vector<vector<float>>> mutate_network(vector<vector<vector<float>>> g, float mut_prob);
 
 #endif
