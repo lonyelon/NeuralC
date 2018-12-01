@@ -3,11 +3,13 @@ A simple c++ implementation of Neural Networks and optimization algorithms.
 
 ## How to compile and run
 In linux:
-1. Build with `make all`.
-2. To run the program use `./bin/release/neuralc`.
-3. To install use `sudo cp ./bin/release/neuralc /bin/`
+1. Build with `./build.sh`.
+2. To run the program use `./NeuralC`.
+3. To install use `./build.sh -i`
+3. To uninstall use `./build.sh -u`
+3. To remove build files use `./build.sh -r`
    
-In windows: Well, i still don't know :(
+In windows: Use Linux :P
 
 ## Console interface
 
@@ -15,9 +17,10 @@ In windows: Well, i still don't know :(
 neuralc [COMMANDS] [OPTIONS]
 
 COMMANDS:
-    -N    --new: creates a new neural network.
-    -T    --train: Uses gradient descent to train a network.
-    -I    --input: gets a vector from the user as input and prints the output.
+   SHORT FORM  LONG FORM   DESCRIPTION  
+   -N          --new       creates a new neural network.
+   -T          --train     Uses gradient descent to train a network.
+   -I          --input     gets a vector from the user as input and prints the output.
 
 OPTIONS:
     -n    --name: The name of the network (can be a path).
