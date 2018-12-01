@@ -3,9 +3,9 @@
     required NeuralC headers
 */
 
-#include "../src/Files.h"
-#include "../src/Network.h"
-#include "../src/StringUtils.h"
-#include "../src/NeuralMath.h"
-#include "../src/GradientDescent.h"
-#include "../src/Extra.h"
+#include "Files.h"
+#include "Network.h"
+#include "StringUtils.h"
+#include "NeuralMath.h"
+#include "GradientDescent.h"
+#include "Mutation.h"
