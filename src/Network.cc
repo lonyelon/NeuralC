@@ -16,7 +16,7 @@ using namespace std;
 
 /*
 
-Aditional functions that are useful
+	Aditional functions that are useful
 
 */
 
@@ -83,6 +83,11 @@ vector<vector<vector<float>>> mutate_network(vector<vector<vector<float>>> g, fl
 	CODE FOR THE NETWORK CLASS
 
 */
+
+Network::Network()
+{
+	Network({2, 1});
+}
 
 Network::Network(vector<int> layers)
 {

@@ -34,6 +34,11 @@ int main(int argc, char *argv[])
 
     for (int i = 1; i < argc; i++)
     {
+        if (arg[i] == "--help" || arg[i] == "-h" || arg[i] == "-H")
+        {
+            command = 'H';
+            break;
+        }
         if (arg[i] == "--new" || arg[i] == "-N")
             command = 'N';
 
@@ -157,8 +162,17 @@ int main(int argc, char *argv[])
 
             break;
         }
-        
+
         default:
+        case 'H':
+            cout << "NeuralC help:" << endl;
+            cout << "NauralC [MODE] [OPTIONS]" << endl;
+            cout << "MODES:" << endl;
+            cout << "\tNew Network (-N, --new)[name]: Creates a new network." << endl;
+            cout << "\tTrain Network (-T, --train)[name, data]: Trains a network with an input-output set." << endl;
+            cout << "\tInput (-I, --input)[name]: Given an input, returns output." << endl;
+            cout << "ARGS:" << endl;
+            cout << "\tName (--name, -N): Specifies the Network name/path." << endl;
             break;
     }
 
