@@ -4,4 +4,8 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+build/*
+include/*
 NeuralC
+*.so
+*.o
