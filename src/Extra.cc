@@ -14,19 +14,14 @@
 
 using namespace std;
 
-void print_layers(Network net)
-{
+void print_layers(const Network net) {
 	vector<int> layers = net.get_layer_blueprint();
-	for (int l = 0; l < layers.size(); l++)
-	{
+	for (int l = 0; l < layers.size(); l++) {
 		string buff = "Layer[" + to_string(l) + "]->";
 		cout << buff;
-		for (int n = 0; n < layers[l]; n++)
-		{
-			if (n != 0)
-			{
-				for (int i = 0; i < buff.size(); i++)
-				{
+		for (int n = 0; n < layers[l]; n++) {
+			if (n != 0) {
+				for (int i = 0; i < buff.size(); i++) {
 					cout << " ";
 				}
 			}
@@ -36,38 +31,13 @@ void print_layers(Network net)
 	}
 }
 
-//Compares the result of "inp" to what we expected ("out") and retuen the error
-float calc_error(vector<vector<float>> inp, vector<vector<float>> out, Network n)
-{
+float calc_error(Network n, const vfloat2d_t inp, const vfloat2d_t out) {
 	float err = 0;
-	for (int i = 0; i < inp.size(); i++)
-	{
-		vector<float> r = n.get_result(inp[i]);
-		for (int q = 0; q < inp[i].size(); q++)
-		{
+	for (int i = 0; i < inp.size(); i++) {
+		vfloat_t r = n.get_result(inp[i]);
+		for (int q = 0; q < inp[i].size(); q++) {
 			err += 0.5*pow(out[i][q] - r[q], 2);
 		}
 	}
-	//err /= inp.size();
 	return err;
-}
-
-//Randomly changes the value of one synapse, used in genetic algorithms
-vector<vector<vector<float>>> mutate_network(vector<vector<vector<float>>> g, float mut_prob)
-{
-	for (int l = 0; l < g.size(); l++)
-	{
-		for (int n = 0; n < g[l].size(); n++)
-		{
-			for (int s = 0; s < g[l][n].size(); s++)
-			{
-				if (random_range(0, 1) < mut_prob)
-				{
-					g[l][n][s] = tanh(atanh(g[l][n][s]) + random_range(-2, 2));
-				}
-			}
-		}
-	}
-
-	return g;
 }

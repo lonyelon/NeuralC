@@ -3,6 +3,12 @@
 
 #include <cmath>
 #include <random>
+#include <vector>
+
+#define vint_t std::vector<int>
+#define vfloat_t std::vector<float>
+#define vfloat2d_t std::vector<std::vector<float>>
+#define vfloat3d_t std::vector<std::vector<std::vector<float>>>
 
 float sigmoid_function(float x);
 float sigmoid_derivative(float x);

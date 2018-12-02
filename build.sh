@@ -97,7 +97,7 @@ printDone
 echo -n "Installing lib and includes..."
 cp $(find ./src/ | grep .h) ./include/
 sudo cp libNeuralC.so /usr/lib/
-sudo cp -r ./include/ /usr/include/NeuralC/
+sudo cp -r ./include/* /usr/include/NeuralC/
 printDone
 
 ###############################################
@@ -105,7 +105,7 @@ printDone
 ###############################################
 echo -n "Building main software..."
 g++ --std=c++17 -lm -pthread -lNeuralC \
-    Main.cc $(find ./src/ | grep .cc) \
+    Main.cc \
     -o NeuralC
 printDone
 

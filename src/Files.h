@@ -7,7 +7,7 @@
 
 #include "Network.h"
 
-void save_genetics(std::string path, Network n);
+void save_genetics(Network n, std::string path);
 Network load_genetics(std::string path);
 
 #endif
